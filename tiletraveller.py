@@ -70,8 +70,7 @@ def play_one_move(col, row, valid_directions,coin):
     ''' Plays one move of the game
         Return if victory has been obtained and updated col,row '''
     victory = False
-    direction_option = ([NORTH, EAST, SOUTH, WEST]) # valkostir fyrir áttirnar
-    direction = random.choice(direction_option) # tölvan velur random átt
+    direction = random.choice([NORTH, EAST, SOUTH, WEST]) # tölvan velur random átt
     print("Direction: {}".format(direction)) 
 
     if not direction in valid_directions:
@@ -85,8 +84,7 @@ def play_one_move(col, row, valid_directions,coin):
 
 
 def pull_the_lever(coin):
-    lever_option = ([YES, NO]) # valkostirnir fyrir lever
-    anwser = random.choice(lever_option) # látum velja random af valkostunum
+    anwser = random.choice([YES, NO])  # látum velja random
     print("Pull a lever (y/n): {}".format(anwser)) # biðjum ekki lengur um input, heldur prentum bara
     if anwser == YES:
         coin += 1
