@@ -1,4 +1,5 @@
 # Constants
+# pissa 
 NORTH = 'n'
 EAST = 'e'
 SOUTH = 's'
