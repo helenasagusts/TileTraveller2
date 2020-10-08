@@ -64,15 +64,16 @@ def find_directions(col, row):
         valid_directions = NORTH+SOUTH
     elif col == 3 and row == 3: # (3,3)
         valid_directions = SOUTH+WEST
-    return valid_directions #, coin_total
+    return valid_directions 
 
 def play_one_move(col, row, valid_directions,coin):
     ''' Plays one move of the game
         Return if victory has been obtained and updated col,row '''
     victory = False
-    direction = input("Direction: ")
-    direction = direction.lower()
-    
+    direction_option = ([NORTH, EAST, SOUTH, WEST]) # valkostir fyrir áttirnar
+    direction = random.choice(direction_option) # tölvan velur random átt
+    print("Direction: {}".format(direction)) 
+
     if not direction in valid_directions:
         print("Not a valid direction!")
     else:
@@ -84,8 +85,9 @@ def play_one_move(col, row, valid_directions,coin):
 
 
 def pull_the_lever(coin):
-    anwser = random_lever
-    print("Pull a lever (y/n): {}".format(anwser))
+    lever_option = ([YES, NO]) # valkostirnir fyrir lever
+    anwser = random.choice(lever_option) # látum velja random af valkostunum
+    print("Pull a lever (y/n): {}".format(anwser)) # biðjum ekki lengur um input, heldur prentum bara
     if anwser == YES:
         coin += 1
         print("You received 1 coin, your total is now {}.". format(coin))
@@ -95,24 +97,25 @@ def pull_the_lever(coin):
     
 
 def play():
-    seed_input = int(input("Input seed: "))
+    seed_input = int(input("Input seed: ")) # bið notanda um seed fjölda
+    random.seed(seed_input) # geri random af seed inputinu
 
     victory = False
     row = 1
     col = 1
     coin = 0
 
+    counter = 0 # núllstylli counterinn til að geta talið moves
+
     while not victory:
         valid_directions = find_directions(col, row)
         print_directions(valid_directions)
         victory, col, row, coin = play_one_move(col, row, valid_directions,coin)
-    print("Victory! Total coins {}.". format(coin))
+        counter += 1 # counterinn hækkar
+    print("Victory! Total coins {}. Moves {}.". format(coin,counter))
 
 # The main program starts here    
 play_again = YES
-
-direction = ([NORTH, EAST, SOUTH, WEST])
-random_lever = random.choice([YES, NO])
 
 while play_again == YES:
     play()
