@@ -81,3 +81,4 @@ while not victory:
     print_directions(valid_directions)
     victory, col, row = play_one_move(col, row, valid_directions)
 print("Victory!")
+
