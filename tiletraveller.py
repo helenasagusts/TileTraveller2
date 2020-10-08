@@ -5,6 +5,8 @@ EAST = 'e'
 SOUTH = 's'
 WEST = 'w'
 
+COIN_LOCATIONS = [(1,2), (2,2), (2,3), (3,2)]
+
 def move(direction, col, row):
     ''' Returns updated col, row given the direction '''
     if direction == NORTH:
@@ -43,26 +45,22 @@ def find_directions(col, row):
     if col == 1 and row == 1:   # (1,1)
         valid_directions = NORTH
     elif col == 1 and row == 2: # (1,2)
-        #coin_total = pull_the_lever(coin)
         valid_directions = NORTH+EAST+SOUTH
     elif col == 1 and row == 3: # (1,3)
         valid_directions = EAST+SOUTH
     elif col == 2 and row == 1: # (2,1)
         valid_directions = NORTH
     elif col == 2 and row == 2: # (2,2)
-        #coin_total = pull_the_lever(coin)
         valid_directions = SOUTH+WEST
     elif col == 2 and row == 3: # (2,3)
-        #coin_total = pull_the_lever(coin)
         valid_directions = EAST+WEST
     elif col == 3 and row == 2: # (3,2)
-        #coin_total = pull_the_lever(coin)
         valid_directions = NORTH+SOUTH
     elif col == 3 and row == 3: # (3,3)
         valid_directions = SOUTH+WEST
     return valid_directions #, coin_total
 
-def play_one_move(col, row, valid_directions):
+def play_one_move(col, row, valid_directions,coin):
     ''' Plays one move of the game
         Return if victory has been obtained and updated col,row '''
     victory = False
@@ -74,22 +72,24 @@ def play_one_move(col, row, valid_directions):
     else:
         col, row = move(direction, col, row)
         victory = is_victory(col, row)
-    return victory, col, row
+        if (col, row) in COIN_LOCATIONS:
+            coin = pull_the_lever(coin)
+    return victory, col, row, coin
+
 
 def pull_the_lever(coin):
     anwser = input("Pull a lever (y/n): ")
     anwser = anwser.lower()
     if anwser == 'y':
-        coin_total = coin + 1
-        print("You received 1 coin, your total is now {}.". format(coin_total))
-        return coin_total
+        coin += 1
+        print("You received 1 coin, your total is now {}.". format(coin))
     elif anwser == 'n':
         pass
+    return coin
     
 
-
 # The main program starts here
-def main():
+def play():
 
     victory = False
     row = 1
@@ -98,19 +98,17 @@ def main():
 
     while not victory:
         valid_directions = find_directions(col, row)
-        coin = coin
         print_directions(valid_directions)
-        victory, col, row = play_one_move(col, row, valid_directions)
+        victory, col, row, coin = play_one_move(col, row, valid_directions,coin)
     print("Victory! Total coins {}.". format(coin))
 
-    play_again = input("Play again (y/n): ")
-    return play_again
 
 # The main program starts here    
-play_again = main()
+play_again = "y"
 
 while play_again == "y":
-    play_again = main()
+    play()
+    play_again = input("Play again (y/n): ")
 
 
 
