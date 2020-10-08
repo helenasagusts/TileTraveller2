@@ -1,5 +1,7 @@
 # Constants
 # pissa 
+# kúka
+
 NORTH = 'n'
 EAST = 'e'
 SOUTH = 's'
