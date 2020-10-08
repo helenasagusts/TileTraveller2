@@ -5,7 +5,13 @@ EAST = 'e'
 SOUTH = 's'
 WEST = 'w'
 
+YES = "y"
+NO = "n"
+
 COIN_LOCATIONS = [(1,2), (2,2), (2,3), (3,2)]
+
+import random
+
 
 def move(direction, col, row):
     ''' Returns updated col, row given the direction '''
@@ -78,18 +84,18 @@ def play_one_move(col, row, valid_directions,coin):
 
 
 def pull_the_lever(coin):
-    anwser = input("Pull a lever (y/n): ")
-    anwser = anwser.lower()
-    if anwser == 'y':
+    anwser = random_lever
+    print("Pull a lever (y/n): {}".format(anwser))
+    if anwser == YES:
         coin += 1
         print("You received 1 coin, your total is now {}.". format(coin))
-    elif anwser == 'n':
+    elif anwser == NO:
         pass
     return coin
     
 
-# The main program starts here
 def play():
+    seed_input = int(input("Input seed: "))
 
     victory = False
     row = 1
@@ -102,11 +108,13 @@ def play():
         victory, col, row, coin = play_one_move(col, row, valid_directions,coin)
     print("Victory! Total coins {}.". format(coin))
 
-
 # The main program starts here    
-play_again = "y"
+play_again = YES
 
-while play_again == "y":
+direction = ([NORTH, EAST, SOUTH, WEST])
+random_lever = random.choice([YES, NO])
+
+while play_again == YES:
     play()
     play_again = input("Play again (y/n): ")
 
